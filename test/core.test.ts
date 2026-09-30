@@ -1,0 +1,1 @@
+import{expect,it}from'vitest';import{parseDescriptor}from'../src/index.js';it('parses flags',()=>expect(parseDescriptor(32).singleSegment).toBe(true));
