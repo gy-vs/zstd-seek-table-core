@@ -1,2 +1,3 @@
-export type FrameHeader={singleSegment:boolean;checksum:boolean,dictionaryIdFlag:number,contentSizeFlag:number};export function parseDescriptor(byte:number):FrameHeader{return{contentSizeFlag:byte>>6,dictionaryIdFlag:byte&3,checksum:Boolean(byte&4),singleSegment:Boolean(byte&32)}}export function readBlockHeader(data:Uint8Array){if(data.length<3)return null;const value=data[0]|data[1]<<8|data[2]<<16;return{last:Boolean(value&1),type:(value>>1)&3,size:value>>3}}
+export * from './frames.js';
 export * from './dictionary.js';
+export * from './seekable.js';
