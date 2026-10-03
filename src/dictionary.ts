@@ -27,14 +27,21 @@ export function explicitDictionary(id: number): DictionarySelector {
 export function readDictionarySelector(
   data: Uint8Array,
   descriptorOffset = 0,
+  fieldOffset: number = descriptorOffset + 1,
 ): ParsedDictionarySelector | null {
-  if (!Number.isInteger(descriptorOffset) || descriptorOffset < 0 || descriptorOffset >= data.length) {
+  if (
+    !Number.isInteger(descriptorOffset) ||
+    descriptorOffset < 0 ||
+    descriptorOffset >= data.length ||
+    !Number.isInteger(fieldOffset) ||
+    fieldOffset < descriptorOffset + 1
+  ) {
     return null;
   }
 
   const flag = data[descriptorOffset]! & 3;
   const fieldLength = DICTIONARY_ID_FIELD_LENGTHS[flag]!;
-  const valueOffset = descriptorOffset + 1;
+  const valueOffset = fieldOffset;
 
   if (fieldLength === 0) {
     return { selector: NO_DICTIONARY, fieldLength, nextOffset: valueOffset };
